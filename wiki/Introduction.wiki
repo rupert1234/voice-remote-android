@@ -4,10 +4,10 @@ To properly use this program you first need to download and install several comp
 
 = Required components =
 
-  * [client application] installed on the phone (not yet on the market)
-  * [server application] installed on a computer
+  * [client client application] installed on the phone (not yet on the market)
+  * [server server application] installed on a computer
   * [Julius] ASR engine (patched)
-  * [acoustic models]
+  * [AcousticModels acoutsic models]
 
 = Configuration and usage =
 
