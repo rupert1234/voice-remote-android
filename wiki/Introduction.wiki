@@ -1,0 +1,8 @@
+#summary Introduction to project.
+
+= Required components =
+
+  # client application installed on the phone (not yet on the market)
+  # server application installed on a computer (Java application)
+  # Julius server (patched)
+  # acoustic models (from VoxForge)
