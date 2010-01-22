@@ -1,8 +1,21 @@
 #summary Introduction to project.
 
+To properly use this program you first need to download and install several components.
+
 = Required components =
 
-  # client application installed on the phone (not yet on the market)
-  # server application installed on a computer (Java application)
-  # Julius server (patched)
-  # acoustic models (from VoxForge)
+  * [client application] installed on the phone (not yet on the market)
+  * [server application] installed on a computer
+  * [Julius] ASR engine (patched)
+  * [acoustic models]
+
+= Configuration and usage =
+
+After you have installed all these programs, you need to configure the server to make it work. This process is two-fold:
+
+  # You need to define what the system will recognize by compiling and activating [grammars].
+  # You need to define how the system will react to recognized commands by writing appropriate [scripts].
+
+= Contact =
+
+For further questions and suggestions contact me at: voice.remote.android (at) gmail.com
