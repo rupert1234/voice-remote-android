@@ -1,0 +1,9 @@
+Julius is an Open Source Speech Recognition Engine written in C. It works on various platforms (Windows, Linux, possibly MacOSX). The source code and several types of binaries can be found on http://julius.sourceforge.jp/ Don't be discouraged by the Japanese characters. The link to the English version is on the top menu.
+
+There are two ways Julius can be utilized in other projects. One is by linking the recently created libjulius programming library directly into the project. The other, slightly lazier, is to connect to the "julius.exe" program using one of the various available methods.
+
+Julius can take audio input from a variety of sources (mic, rawfile, mfcfile, adinnet, stdin, netaudio, alsa, oss, esd). The one that is most convenient for us is "adinnet". It is basically raw audio over a tcpip socket, but each chunk of data is prefixed by a 4-byte integer value corresponding to its length. This value has to be even (for 16-bit audio signal) and in endian ordering native to the machine its running on (most likely little-endian, opposite to what is in Java). Sending the size of 0 corresponds to the end of the segment of speech and forces the engine to process the data.
+
+Due to a certain programming error the adinnet input doesn't work to well when talking to Java. I wrote a patch for the version 4.1.4 for the file libsent/src/net/rd_wt.c: http://pastebin.com/f75af0fe6 I will put a patched binary windows version in the download section.
+
+To read the output of the Julius program on can also use a special socket API activated by the "-module" switch while starting the program. It's a simple text socket that accepts a variety of text commands and output everything in XML-like format. This is especially convenient because we can later create an Android App that talks to Julius directly and parses/uses the recognition output inside the phone.
