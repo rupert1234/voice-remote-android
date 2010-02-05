@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 
-public class JuliusClient {
+public class JuliusClient implements Runnable {
 	
 	private String hostname;
 	private int port;
