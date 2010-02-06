@@ -34,7 +34,6 @@ public class ServerSettings extends JFrame {
 		setSize(640,480);
 		
 		Container content = getContentPane();
-		content.setBackground(Color.white);
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
 		
@@ -58,15 +57,7 @@ public class ServerSettings extends JFrame {
 		grammars_description.setBorder(BorderFactory.createEtchedBorder());
 		grammars_panel.add(grammars_description);
 		
-		JPanel actions_panel = new JPanel();
-		actions_panel.setLayout(new BoxLayout(actions_panel, BoxLayout.Y_AXIS));
-		JLabel actions_description = new JLabel();
-		actions_description.setText(actions_desc_text);
-		actions_description.setMaximumSize(new Dimension(Integer.MAX_VALUE,50));
-		actions_description.setVerticalAlignment(JLabel.CENTER);
-		actions_description.setHorizontalAlignment(JLabel.CENTER);
-		actions_description.setBorder(BorderFactory.createEtchedBorder());
-		actions_panel.add(actions_description);
+		ActionSettings actions_panel = new ActionSettings();		
 		
 		tabbedPane.add("General", general_panel);
 		tabbedPane.add("Grammars", grammars_panel);
@@ -86,6 +77,5 @@ public class ServerSettings extends JFrame {
 	
 	private String general_desc_text="This tab contains the general settings for the server.";
 	private String gramamr_desc_text="This tab allows to change the words that the system will recognize.";
-	private String actions_desc_text="This tab is used for binding recognized utterances to specific actions.";
 
 }
