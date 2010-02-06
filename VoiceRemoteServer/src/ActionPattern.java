@@ -17,15 +17,20 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import org.w3c.dom.Element;
 
 
-public class ActionPattern extends JPanel{
+public class ActionPattern extends JPanel implements DocumentListener{
 	
 	private static final long serialVersionUID = 1L;
 	private String pattern;
 	private List<ActionActivity> activities;
 	private final ActionManager parent;
 	private final ActionPattern this_pattern;
+	private JTextField pattern_field;
 
 	public ActionPattern(ActionManager parent)
 	{
@@ -43,10 +48,11 @@ public class ActionPattern extends JPanel{
 		
 		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
 		
-		JTextField pattern_field=new JTextField();
+		pattern_field=new JTextField();
 		pattern_field.setMaximumSize(new Dimension(Integer.MAX_VALUE,30));
 		pattern_field.setText(pattern);
 		pattern_field.setAlignmentX(Component.LEFT_ALIGNMENT);
+		pattern_field.getDocument().addDocumentListener(this);
 		add(pattern_field);
 		
 		JPanel buttons_bar=new JPanel();
@@ -77,7 +83,7 @@ public class ActionPattern extends JPanel{
 		JButton remove_pattern=new JButton("Remove pattern");
 		remove_pattern.addActionListener(new AbstractAction() {			
 			public void actionPerformed(ActionEvent e) {			
-				parent.remove(this_pattern);
+				parent.removePattern(this_pattern);
 				parent.revalidate();
 				parent.repaint();
 			}
@@ -119,6 +125,20 @@ public class ActionPattern extends JPanel{
 			act=i.next();
 			act.execute();
 		}
+	}
+	
+	public Iterator<ActionActivity> getActivities()
+	{
+		 return activities.iterator();		
+	}
+
+	public void changedUpdate(DocumentEvent e) {
+	}
+	public void insertUpdate(DocumentEvent e) {
+		pattern=pattern_field.getText();
+	}
+	public void removeUpdate(DocumentEvent e) {
+		pattern=pattern_field.getText();
 	}
 
 }
