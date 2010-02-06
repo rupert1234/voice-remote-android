@@ -52,7 +52,15 @@ public class ActionActivity extends JPanel implements DocumentListener{
 		});
 		add(typesList);
 		
-		argument_field=new JTextField();
+		switch(type)
+		{
+		case DIALOG: typesList.setSelectedIndex(0); break;
+		case SYSTEM: typesList.setSelectedIndex(1); break;
+		case MOUSE: typesList.setSelectedIndex(2); break;
+		case KEYBOARD: typesList.setSelectedIndex(3); break;
+		}
+		
+		argument_field=new JTextField(argument);
 		argument_field.setMaximumSize(new Dimension(Integer.MAX_VALUE,30));
 		argument_field.getDocument().addDocumentListener(this);
 				

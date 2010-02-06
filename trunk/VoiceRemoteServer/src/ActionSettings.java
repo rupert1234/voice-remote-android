@@ -20,6 +20,8 @@ public class ActionSettings extends JPanel {
 	private String actions_desc_text="This tab is used for binding recognized utterances to specific actions.";
 	private JScrollPane scrollPane;
 	
+	ActionManager manager;
+	
 	public ActionSettings()
 	{
 		
@@ -32,10 +34,21 @@ public class ActionSettings extends JPanel {
 		actions_description.setBorder(BorderFactory.createEtchedBorder());
 		add(actions_description,BorderLayout.PAGE_START);
 		
-		ActionManager manager = new ActionManager();		
-				
+		manager = new ActionManager();		
 		scrollPane=new JScrollPane(manager);		
-		add(scrollPane,BorderLayout.CENTER);				
+		add(scrollPane,BorderLayout.CENTER);
+		
+		JPanel buttons_bottom=new JPanel();
+		
+		JButton button_save=new JButton("Save All");
+		button_save.addActionListener(new AbstractAction() {
+			public void actionPerformed(ActionEvent e) {
+				manager.save();				
+			}
+		});
+		
+		buttons_bottom.add(button_save);
+		add(buttons_bottom,BorderLayout.PAGE_END);
 	}
 	
 }
