@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -141,4 +143,13 @@ public class ActionPattern extends JPanel implements DocumentListener{
 		pattern=pattern_field.getText();
 	}
 
+	public boolean matches(String str)
+	{
+		 Pattern p = Pattern.compile(pattern);
+		 Matcher m = p.matcher(str);
+		 boolean b = m.matches();
+		 
+		 return b;
+	}
+	
 }

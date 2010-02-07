@@ -51,4 +51,9 @@ public class ActionSettings extends JPanel {
 		add(buttons_bottom,BorderLayout.PAGE_END);
 	}
 	
+	public void processRecognition(String recognition)
+	{
+		manager.processRecognition(recognition);
+	}
+	
 }

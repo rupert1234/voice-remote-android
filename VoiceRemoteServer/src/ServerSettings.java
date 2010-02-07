@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
@@ -6,7 +5,6 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,6 +18,8 @@ public class ServerSettings extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = -1057013266790426531L;
+	
+	private ActionSettings actions_panel;
 
 	public ServerSettings() {
 		
@@ -57,7 +57,7 @@ public class ServerSettings extends JFrame {
 		grammars_description.setBorder(BorderFactory.createEtchedBorder());
 		grammars_panel.add(grammars_description);
 		
-		ActionSettings actions_panel = new ActionSettings();		
+		actions_panel = new ActionSettings();		
 		
 		tabbedPane.add("General", general_panel);
 		tabbedPane.add("Grammars", grammars_panel);
@@ -78,4 +78,10 @@ public class ServerSettings extends JFrame {
 	private String general_desc_text="This tab contains the general settings for the server.";
 	private String gramamr_desc_text="This tab allows to change the words that the system will recognize.";
 
+	
+	public ActionSettings getActions()
+	{
+		return actions_panel;
+	}
+	
 }

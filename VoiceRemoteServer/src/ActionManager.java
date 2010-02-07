@@ -24,7 +24,6 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
@@ -184,5 +183,16 @@ public class ActionManager extends JPanel {
 		if(str.equals("MOUSE")) return ActionActivityType.MOUSE;
 		if(str.equals("KEYBOARD")) return ActionActivityType.KEYBOARD;
 		return ActionActivityType.DIALOG;
+	}
+	
+	public void processRecognition(String recognition)
+	{
+		Iterator<ActionPattern> i=patterns.iterator();
+		while(i.hasNext())
+		{
+			ActionPattern pat=i.next();
+			if(pat.matches(recognition))
+				pat.executeAllActivities();
+		}
 	}
 }
