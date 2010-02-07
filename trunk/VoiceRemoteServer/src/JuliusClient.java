@@ -10,10 +10,12 @@ public class JuliusClient implements Runnable {
 	private String hostname;
 	private int port;
 	private JuliusOutputParser parser;
+	private ActionSettings actions;
 	
-	public JuliusClient(String hostname, int port) {
+	public JuliusClient(String hostname, int port, ActionSettings actions) {
 		this.hostname = hostname;
 		this.port = port;
+		this.actions=actions;
 		parser=new JuliusOutputParser();
 	}
 
@@ -43,7 +45,11 @@ public class JuliusClient implements Runnable {
 				break;
 			}
 			if(parser.addLine(line))
-				System.out.println(parser.getRecognitionOutput());			
+			{
+				String ret=parser.getRecognitionOutput();
+				System.out.println(ret);
+				actions.processRecognition(ret);
+			}
 		}
 		
 		System.out.println("diconnected...");
