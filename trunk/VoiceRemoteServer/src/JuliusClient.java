@@ -44,7 +44,7 @@ public class JuliusClient implements Runnable {
 				System.out.println("Error reading socket: "+e);
 				break;
 			}
-			if(parser.addLine(line))
+			if(line!=null && parser.addLine(line))
 			{
 				String ret=parser.getRecognitionOutput();
 				System.out.println(ret);

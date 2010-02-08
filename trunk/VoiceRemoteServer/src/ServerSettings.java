@@ -1,10 +1,13 @@
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -46,6 +49,14 @@ public class ServerSettings extends JFrame {
 		general_description.setHorizontalAlignment(JLabel.CENTER);
 		general_description.setBorder(BorderFactory.createEtchedBorder());
 		general_panel.add(general_description);
+		
+		JButton show_console=new JButton("Show Julius console");
+		show_console.addActionListener(new AbstractAction() {			
+			public void actionPerformed(ActionEvent e) {
+				Main.julius_starter.displayOutput();				
+			}
+		});
+		general_panel.add(show_console);
 		
 		JPanel grammars_panel = new JPanel();
 		grammars_panel.setLayout(new BoxLayout(grammars_panel, BoxLayout.Y_AXIS));
