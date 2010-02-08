@@ -30,6 +30,11 @@ public class JuliusOutputParser {
 	{
 		String ret=recognition_output;
 		recognition_output="";
+		
+		ret=ret.replaceAll("<s>", "");
+		ret=ret.replaceAll("</s>", "");
+		ret=ret.trim();
+		
 		return ret;
 	}
 

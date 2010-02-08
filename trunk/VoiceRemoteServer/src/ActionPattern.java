@@ -33,6 +33,7 @@ public class ActionPattern extends JPanel implements DocumentListener{
 	private final ActionManager parent;
 	private final ActionPattern this_pattern;
 	private JTextField pattern_field;
+	private String [] groups;
 
 	public ActionPattern(ActionManager parent)
 	{
@@ -75,7 +76,7 @@ public class ActionPattern extends JPanel implements DocumentListener{
 		JButton test=new JButton("Test");
 		test.addActionListener(new AbstractAction() {			
 			public void actionPerformed(ActionEvent e) {		
-				this_pattern.executeAllActivities();
+				this_pattern.executeAllActivities(null);
 			}
 		});		
 		buttons_bar.add(test);
@@ -118,14 +119,14 @@ public class ActionPattern extends JPanel implements DocumentListener{
 		remove(act);
 	}
 	
-	public void executeAllActivities()
+	public void executeAllActivities(String [] groups)
 	{
 		Iterator<ActionActivity> i=activities.iterator();
 		ActionActivity act;
 		while(i.hasNext())
 		{
 			act=i.next();
-			act.execute();
+			act.execute(groups);
 		}
 	}
 	
@@ -149,7 +150,20 @@ public class ActionPattern extends JPanel implements DocumentListener{
 		 Matcher m = p.matcher(str);
 		 boolean b = m.matches();
 		 
+		 if(b)
+		 {
+			 int num=m.groupCount();
+			 groups=new String[num+1];
+			 for(int i=0; i<=num; i++)
+				 groups[i]=m.group(i);
+		 }
+		 
 		 return b;
+	}
+	
+	public String[] getGroups()
+	{
+		return groups;
 	}
 	
 }

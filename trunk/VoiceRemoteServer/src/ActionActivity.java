@@ -93,24 +93,36 @@ public class ActionActivity extends JPanel implements DocumentListener{
 		this.argument = argument;
 	}
 	
-	public void execute()
+	public void execute(String [] groups)
 	{
+		
+		String arg=argument;
+		if(groups!=null && groups.length>0)
+		{
+			for(int i=0; i<groups.length; i++)
+			{
+				arg=arg.replaceAll("\\$"+i, groups[i]);
+			}
+		}
+		
+		arg=arg.replaceAll("\\$.","");
+		
 		switch(type) {
 		
 		case DIALOG:
-			JOptionPane.showMessageDialog(null, argument);
+			JOptionPane.showMessageDialog(null, arg);
 			break;
 		case SYSTEM:
-			JOptionPane.showMessageDialog(null, "System action not implemented yet!\nArgs: "+argument);
+			JOptionPane.showMessageDialog(null, "System action not implemented yet!\nArgs: "+arg);
 			break;
 		case MOUSE:
-			JOptionPane.showMessageDialog(null, "Mouse action not implemented yet!\nArgs: "+argument);
+			JOptionPane.showMessageDialog(null, "Mouse action not implemented yet!\nArgs: "+arg);
 			break;
 		case KEYBOARD:
-			JOptionPane.showMessageDialog(null, "Keyboard action not implemented yet!\nArgs: "+argument);
+			JOptionPane.showMessageDialog(null, "Keyboard action not implemented yet!\nArgs: "+arg);
 			break;
 		default:
-			JOptionPane.showMessageDialog(null, "Don't know how to do "+type+"!\nArgs: "+argument);
+			JOptionPane.showMessageDialog(null, "Don't know how to do "+type+"!\nArgs: "+arg);
 		}
 	}
 

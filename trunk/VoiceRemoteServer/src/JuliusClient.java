@@ -47,7 +47,7 @@ public class JuliusClient implements Runnable {
 			if(line!=null && parser.addLine(line))
 			{
 				String ret=parser.getRecognitionOutput();
-				System.out.println(ret);
+				System.out.println("\""+ret+"\"");
 				actions.processRecognition(ret);
 			}
 		}

@@ -192,7 +192,10 @@ public class ActionManager extends JPanel {
 		{
 			ActionPattern pat=i.next();
 			if(pat.matches(recognition))
-				pat.executeAllActivities();
+			{
+				pat.executeAllActivities(pat.getGroups());
+				break;
+			}
 		}
 	}
 }
