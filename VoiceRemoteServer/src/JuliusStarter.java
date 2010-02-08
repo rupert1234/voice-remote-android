@@ -37,7 +37,7 @@ public class JuliusStarter implements Runnable {
 	public void run()
 	{
 		try {
-			proc=Runtime.getRuntime().exec("./julius -C julian.jconf");			
+			proc=Runtime.getRuntime().exec("julius_quickstart/julius -C julius_quickstart/julian.jconf");			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null,"Failed to start Julius ASR! Check your settings!\n"+e);
 			proc=null;
@@ -146,8 +146,6 @@ public class JuliusStarter implements Runnable {
 	
 	public void addLine(String line)
 	{
-		System.out.println(line);
-		
 		synchronized(output)
 		{				
 			output.add(line);
