@@ -24,6 +24,8 @@ public class ServerSettings extends JFrame {
 	
 	private ActionSettings actions_panel;
 	private GrammarSettings grammars_panel;
+	private AdvancedGrammarEditor advanced_grammars_panel;
+	private LexiconSettings lexicon_panel;
 
 	public ServerSettings() {
 		
@@ -61,10 +63,16 @@ public class ServerSettings extends JFrame {
 		
 		grammars_panel = new GrammarSettings();
 		
+		advanced_grammars_panel = new AdvancedGrammarEditor();
+		
+		lexicon_panel = new LexiconSettings();
+		
 		actions_panel = new ActionSettings();		
 		
 		tabbedPane.add("General", general_panel);
 		tabbedPane.add("Grammars", grammars_panel);
+		tabbedPane.add("Adv.GrammarEditor", advanced_grammars_panel);
+		tabbedPane.add("Lexicon",lexicon_panel);
 		tabbedPane.add("Actions", actions_panel);
 		
 		content.add(tabbedPane);
