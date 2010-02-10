@@ -2,8 +2,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,7 +19,7 @@ import javax.swing.event.DocumentListener;
 
 /* TODO: parameters */
 
-public class ActionActivity extends JPanel implements DocumentListener{
+public class ActionActivity extends JPanel implements DocumentListener,MouseListener{
 	
 	private ActionActivityType type;
 	private String argument;
@@ -25,6 +29,8 @@ public class ActionActivity extends JPanel implements DocumentListener{
 	
 	private JTextField argument_field;
 	private JComboBox typesList;
+	
+	private boolean drag_start,drag_end;
 	
 	public ActionActivity(ActionPattern parent)
 	{
@@ -66,6 +72,8 @@ public class ActionActivity extends JPanel implements DocumentListener{
 				
 		add(argument_field);
 		
+		add(Box.createRigidArea(new Dimension(50,0)));
+		
 		JButton remove = new JButton("Remove");
 		remove.addActionListener(new AbstractAction() {			
 			public void actionPerformed(ActionEvent e) {
@@ -75,6 +83,11 @@ public class ActionActivity extends JPanel implements DocumentListener{
 			}
 		});
 		add(remove);
+		
+		addMouseListener(this);
+		
+		drag_start=false;
+		drag_end=false;
 	}
 
 	public ActionActivityType getType() {
@@ -142,5 +155,53 @@ public class ActionActivity extends JPanel implements DocumentListener{
 		else if(str=="System") type=ActionActivityType.SYSTEM;
 		else if(str=="Mouse") type=ActionActivityType.MOUSE;
 		else if(str=="Keyboard") type=ActionActivityType.KEYBOARD;
+	}
+
+	public void mouseClicked(MouseEvent e) {	
+	}
+
+	public void mouseEntered(MouseEvent e) {
+		if(parent.getDragging() && !drag_start)
+		{
+			drag_end=true;
+			setBorder(BorderFactory.createLineBorder(Color.blue,5));
+		}
+	}
+
+	public void mouseExited(MouseEvent e) {
+		if(parent.getDragging() && !drag_start)
+		{
+			drag_end=false;
+			setBorder(null);
+		}
+	}
+
+	public void mousePressed(MouseEvent e) {		
+		setBorder(BorderFactory.createLineBorder(Color.red,5));
+		parent.setDragging(true);
+		drag_start=true;
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		setBorder(null);
+		parent.setDragging(false);
+		parent.processDnD();
+	}
+	
+	public boolean isDnDStart()
+	{
+		return drag_start;
+	}
+	
+	public boolean isDnDEnd()
+	{
+		return drag_end;
+	}
+	
+	public void clearDnD()
+	{
+		setBorder(null);
+		drag_start=false;
+		drag_end=false;
 	}
 }

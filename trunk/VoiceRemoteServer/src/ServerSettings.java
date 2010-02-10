@@ -23,6 +23,7 @@ public class ServerSettings extends JFrame {
 	private static final long serialVersionUID = -1057013266790426531L;
 	
 	private ActionSettings actions_panel;
+	private GrammarSettings grammars_panel;
 
 	public ServerSettings() {
 		
@@ -58,15 +59,7 @@ public class ServerSettings extends JFrame {
 		});
 		general_panel.add(show_console);
 		
-		JPanel grammars_panel = new JPanel();
-		grammars_panel.setLayout(new BoxLayout(grammars_panel, BoxLayout.Y_AXIS));
-		JLabel grammars_description = new JLabel();
-		grammars_description.setText(gramamr_desc_text);
-		grammars_description.setMaximumSize(new Dimension(Integer.MAX_VALUE,50));
-		grammars_description.setVerticalAlignment(JLabel.CENTER);
-		grammars_description.setHorizontalAlignment(JLabel.CENTER);
-		grammars_description.setBorder(BorderFactory.createEtchedBorder());
-		grammars_panel.add(grammars_description);
+		grammars_panel = new GrammarSettings();
 		
 		actions_panel = new ActionSettings();		
 		
@@ -87,7 +80,6 @@ public class ServerSettings extends JFrame {
 	}
 	
 	private String general_desc_text="This tab contains the general settings for the server.";
-	private String gramamr_desc_text="This tab allows to change the words that the system will recognize.";
 
 	
 	public ActionSettings getActions()

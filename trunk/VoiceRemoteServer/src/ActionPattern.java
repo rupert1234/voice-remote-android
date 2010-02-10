@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,6 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -25,7 +28,7 @@ import javax.swing.event.DocumentListener;
 import org.w3c.dom.Element;
 
 
-public class ActionPattern extends JPanel implements DocumentListener{
+public class ActionPattern extends JPanel implements DocumentListener,MouseListener{
 	
 	private static final long serialVersionUID = 1L;
 	private String pattern;
@@ -34,6 +37,8 @@ public class ActionPattern extends JPanel implements DocumentListener{
 	private final ActionPattern this_pattern;
 	private JTextField pattern_field;
 	private String [] groups;
+	private boolean drag_start,drag_end;
+	private boolean action_dragging;
 
 	public ActionPattern(ActionManager parent)
 	{
@@ -97,6 +102,10 @@ public class ActionPattern extends JPanel implements DocumentListener{
 		add(Box.createRigidArea(new Dimension(0,10)));
 
 		setAlignmentX(Component.LEFT_ALIGNMENT);
+		
+		addMouseListener(this);
+		drag_start=false;
+		drag_end=false;
 	}
 
 	public String getPattern() {
@@ -165,5 +174,88 @@ public class ActionPattern extends JPanel implements DocumentListener{
 	{
 		return groups;
 	}
+
+	public void mouseClicked(MouseEvent e) {
+
+	}
+
+	public void mouseEntered(MouseEvent e) {
+		if(parent.getDragging() && !drag_start)
+		{
+			drag_end=true;
+			setBorder(BorderFactory.createLineBorder(Color.blue,5));
+		}
+	}
+
+	public void mouseExited(MouseEvent e) {
+		if(parent.getDragging() && !drag_start)
+		{
+			drag_end=false;
+			setBorder(null);
+		}
+	}
+
+	public void mousePressed(MouseEvent e) {		
+		setBorder(BorderFactory.createLineBorder(Color.red,5));
+		parent.setDragging(true);
+		drag_start=true;
+	}
+
+	public void mouseReleased(MouseEvent e) {
+		setBorder(null);
+		parent.setDragging(false);
+		parent.processDnD();
+	}
 	
+	public boolean isDnDStart()
+	{
+		return drag_start;
+	}
+	
+	public boolean isDnDEnd()
+	{
+		return drag_end;
+	}
+	
+	public void clearDnD()
+	{
+		setBorder(null);
+		drag_start=false;
+		drag_end=false;
+	}
+	
+	public boolean getDragging()
+	{
+		return action_dragging;
+	}
+	
+	public void setDragging(boolean b)
+	{
+		action_dragging=b;
+	}
+	
+	public void processDnD()
+	{
+		int num=getComponentCount()-2;
+		ActionActivity pat;
+		int start=-1,end=-1;
+		for(int i=1; i<num; i++)
+		{
+			pat=(ActionActivity)getComponent(i);
+			if(pat.isDnDStart()) start=i;
+			if(pat.isDnDEnd()) end=i;
+			pat.clearDnD();
+		}
+		
+		end++;//we wanna add after, not before
+		if(end>start) end--; //if start is smaller than end, end is gonna reduce after removing start
+		
+		if(start>=0 && end>=0 && start!=end)
+		{
+			pat=(ActionActivity)getComponent(start);
+			remove(start);
+			add(pat,end);			
+		}
+		
+	}
 }

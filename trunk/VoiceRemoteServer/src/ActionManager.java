@@ -33,6 +33,8 @@ public class ActionManager extends JPanel {
 	private List<ActionPattern> patterns;
 	private final ActionManager this_manager; 
 	private JButton add_pattern_button;
+	private boolean dragging;
+	
 	public ActionManager()
 	{
 		this_manager=this;
@@ -197,5 +199,40 @@ public class ActionManager extends JPanel {
 				break;
 			}
 		}
+	}
+	
+	public boolean getDragging()
+	{
+		return dragging;
+	}
+	
+	public void setDragging(boolean b)
+	{
+		dragging=b;
+	}
+	
+	public void processDnD()
+	{
+		int num=getComponentCount()-2;
+		ActionPattern pat;
+		int start=-1,end=-1;
+		for(int i=0; i<num; i++)
+		{
+			pat=(ActionPattern)getComponent(i);
+			if(pat.isDnDStart()) start=i;
+			if(pat.isDnDEnd()) end=i;
+			pat.clearDnD();
+		}
+		
+		end++;//we wanna add after, not before
+		if(end>start) end--; //if start is smaller than end, end is gonna reduce after removing start
+		
+		if(start>=0 && end>=0 && start!=end)
+		{
+			pat=(ActionPattern)getComponent(start);
+			remove(start);
+			add(pat,end);			
+		}
+		
 	}
 }
