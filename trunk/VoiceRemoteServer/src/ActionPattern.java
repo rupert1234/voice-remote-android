@@ -246,12 +246,11 @@ public class ActionPattern extends JPanel implements DocumentListener,MouseListe
 			if(pat.isDnDEnd()) end=i;
 			pat.clearDnD();
 		}
-		
-		end++;//we wanna add after, not before
-		if(end>start) end--; //if start is smaller than end, end is gonna reduce after removing start
-		
+				
 		if(start>=0 && end>=0 && start!=end)
 		{
+			end++;//we wanna add after, not before
+			if(end>start) end--; //if start is smaller than end, end is gonna reduce after removing start
 			pat=(ActionActivity)getComponent(start);
 			remove(start);
 			add(pat,end);			

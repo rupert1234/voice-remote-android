@@ -224,11 +224,10 @@ public class ActionManager extends JPanel {
 			pat.clearDnD();
 		}
 		
-		end++;//we wanna add after, not before
-		if(end>start) end--; //if start is smaller than end, end is gonna reduce after removing start
-		
 		if(start>=0 && end>=0 && start!=end)
 		{
+			end++;//we wanna add after, not before
+			if(end>start) end--; //if start is smaller than end, end is gonna reduce after removing start
 			pat=(ActionPattern)getComponent(start);
 			remove(start);
 			add(pat,end);			
