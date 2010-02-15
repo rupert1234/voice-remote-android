@@ -65,7 +65,7 @@ public class ServerSettings extends JFrame {
 		
 		advanced_grammars_panel = new AdvancedGrammarEditor();
 		
-		lexicon_panel = new LexiconSettings();
+		lexicon_panel = new LexiconSettings(grammars_panel);
 		
 		actions_panel = new ActionSettings();		
 		

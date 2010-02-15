@@ -2,9 +2,13 @@ public class Main {
 
 	public static JuliusStarter julius_starter;
 	public static ServerSettings settings;
+	public static TranscriptionCache transcription_cache;
 	
 	public static void main(String[] args) {
 
+		transcription_cache=new TranscriptionCache();
+		transcription_cache.load();
+		
 		settings=new ServerSettings();
 		settings.setVisible(true);
 		

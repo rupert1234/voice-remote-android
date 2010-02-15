@@ -1,6 +1,9 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -72,6 +75,66 @@ public class JuliusGrammar {
 			nodes.clear();
 			return;
 		}
+	}
+	
+	public void save(String file)
+	{
+		BufferedWriter writer=null;
+		try
+		{
+			writer=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+		}catch(Exception e){
+			JOptionPane.showMessageDialog(null, "Cannot save grammar: "+e.getMessage());
+			return;
+		}
+		
+		Iterator<JuliusGrammarArc> it=arcs.iterator();
+		
+		while(it.hasNext())
+		{
+			JuliusGrammarArc arc=it.next();
+			
+			try{
+				writer.write(arc.end_node+" "+arc.word+" "+arc.start_node+" ");
+				if(arc.isAccepting) writer.write("1\n");
+				else writer.write("0\n");
+			}catch(Exception e){
+				JOptionPane.showMessageDialog(null, "Cannot write grammar: "+e.getMessage());
+				return;
+			}
+		}
+		
+		try{
+			writer.close();
+		}catch(Exception e){}
+	}
+	
+	public void addArc(int from, int to, int word_cat)
+	{
+		nodes.add(from);
+		nodes.add(to);
+		JuliusGrammarArc arc=new JuliusGrammarArc(from, to, word_cat, false);
+		arcs.add(arc);
+	}
+	
+	public void addArc(int from, int to, int word_cat, boolean accepting)
+	{
+		nodes.add(from);
+		nodes.add(to);
+		JuliusGrammarArc arc=new JuliusGrammarArc(from, to, word_cat, accepting);
+		arcs.add(arc);
+	}
+	
+	public int find(int from, int word_cat)
+	{
+		Iterator<JuliusGrammarArc> it=arcs.iterator();
+		while(it.hasNext())
+		{
+			JuliusGrammarArc arc=it.next();
+			if(arc.start_node==from && arc.word==word_cat)
+				return arc.end_node;
+		}
+		return -1;
 	}
 	
 	public Iterator<Integer> getNodes()
