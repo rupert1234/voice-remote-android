@@ -6,7 +6,9 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Stack;
+import java.util.StringTokenizer;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -38,8 +40,10 @@ public class GrammarSettings extends JPanel {
 
 	private String gramamr_desc_text="This tab allows to change the words that the system will recognize.";
 	
-	JPanel grammar_list;
-	JButton add_line;
+	private JPanel grammar_list;
+	private JButton add_line;
+	private JuliusGrammar grammar;
+	private JuliusDictionary dictionary;
 	
 	GrammarSettings()
 	{
@@ -87,7 +91,7 @@ public class GrammarSettings extends JPanel {
 		});
 		
 		JButton button_compile=new JButton("Process and Activate");
-		button_save.addActionListener(new AbstractAction() {
+		button_compile.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				clearEmptyLines();
 				process();
@@ -201,7 +205,71 @@ public class GrammarSettings extends JPanel {
 	
 	public void process()
 	{
+		List<String> sent_list=new LinkedList<String>();
+		int num=grammar_list.getComponentCount()-1;
+		for(int i=0; i<num; i++)
+		{
+			JTextField tf=(JTextField)grammar_list.getComponent(i);
+			sent_list.add(tf.getText());
+		}
 		
+		if(sent_list.size()==0)
+		{
+			JOptionPane.showMessageDialog(null,"Won't create empty grammar!");
+			return;
+		}
+		
+		grammar=new JuliusGrammar();
+		dictionary=new JuliusDictionary();
+		String w;
+		int id,state,next,state_num=4;
+		num=2;
+		
+		dictionary.addWord("<s>", 0);
+		dictionary.addWord("</s>", 1);
+		grammar.addArc(1, 0, 1);
+		grammar.addArc(2, 3, 0);
+		grammar.addArc(-1, 2, -1, true);
+		
+		Iterator<String> i=sent_list.iterator();
+		while(i.hasNext())
+		{
+			StringTokenizer strtok= new StringTokenizer(i.next());
+			state=3;
+			while(strtok.hasMoreElements())
+			{
+				w=strtok.nextToken();
+				id=dictionary.getWord(w);
+				if(id<0)
+				{
+					id=num;
+					dictionary.addWord(w, id);
+					num++;
+				}
+				
+				next=grammar.find(state, id);
+				if(next<0)
+				{
+					if(strtok.hasMoreElements())
+					{
+						next=state_num;
+						state_num++;
+					}
+					else next=1;
+					grammar.addArc(state, next, id);
+				}
+				
+				state=next;
+			}
+			
+		}
+		
+		grammar.save("julius_quickstart/grammar/main.dfa");
+	}
+	
+	public JuliusDictionary getDictionary()
+	{
+		return dictionary;
 	}
 	
 }
