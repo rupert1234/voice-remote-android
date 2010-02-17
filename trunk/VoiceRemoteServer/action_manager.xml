@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ActionManager>
+<Pattern Expression="OPEN (.*)">
+<Activity Type="DIALOG">Opening program: $1</Activity>
+</Pattern>
+<Pattern Expression="DEBUG">
+<Activity Type="DIALOG">This is a debug!</Activity>
+</Pattern>
+<Pattern Expression="CLOSE WINDOW">
+<Activity Type="DIALOG">Closing the window!</Activity>
+</Pattern>
+<Pattern Expression=".*">
+<Activity Type="DIALOG">Got: $0</Activity>
+</Pattern>
+</ActionManager>
