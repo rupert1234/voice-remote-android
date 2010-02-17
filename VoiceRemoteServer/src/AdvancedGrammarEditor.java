@@ -55,8 +55,8 @@ public class AdvancedGrammarEditor extends JPanel {
 		JButton load_button=new JButton("Load");
 		load_button.addActionListener(new AbstractAction() {			
 			public void actionPerformed(ActionEvent e) {
-				grammar.load("julius_quickstart/grammar/main.dfa");
-				dictionary.load("julius_quickstart/grammar/main.dict");
+				grammar.load("julius/grammar/main.dfa");
+				dictionary.load("julius/grammar/main.dict");
 				drawGrammar(grammar,dictionary);
 			}
 		});

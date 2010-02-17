@@ -37,7 +37,7 @@ public class JuliusStarter implements Runnable {
 	public void run()
 	{
 		try {
-			proc=Runtime.getRuntime().exec("julius_quickstart/julius -C julius_quickstart/julian.jconf");			
+			proc=Runtime.getRuntime().exec("julius/julius -C julius/julius.jconf");			
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null,"Failed to start Julius ASR! Check your settings!\n"+e);
 			proc=null;

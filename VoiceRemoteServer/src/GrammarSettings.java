@@ -90,7 +90,7 @@ public class GrammarSettings extends JPanel {
 			}
 		});
 		
-		JButton button_compile=new JButton("Process and Activate");
+		JButton button_compile=new JButton("Process");
 		button_compile.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				clearEmptyLines();
@@ -264,7 +264,7 @@ public class GrammarSettings extends JPanel {
 			
 		}
 		
-		grammar.save("julius_quickstart/grammar/main.dfa");
+		grammar.save("julius/grammar/main.dfa");
 	}
 	
 	public JuliusDictionary getDictionary()

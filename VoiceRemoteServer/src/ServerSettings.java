@@ -70,9 +70,9 @@ public class ServerSettings extends JFrame {
 		actions_panel = new ActionSettings();		
 		
 		tabbedPane.add("General", general_panel);
-		tabbedPane.add("Grammars", grammars_panel);
-		tabbedPane.add("Adv.GrammarEditor", advanced_grammars_panel);
+		tabbedPane.add("Grammars", grammars_panel);		
 		tabbedPane.add("Lexicon",lexicon_panel);
+		tabbedPane.add("Adv.GrammarEditor", advanced_grammars_panel);
 		tabbedPane.add("Actions", actions_panel);
 		
 		content.add(tabbedPane);
