@@ -126,7 +126,12 @@ public class ActionActivity extends JPanel implements DocumentListener,MouseList
 			JOptionPane.showMessageDialog(null, arg);
 			break;
 		case SYSTEM:
-			JOptionPane.showMessageDialog(null, "System action not implemented yet!\nArgs: "+arg);
+			try{
+				Runtime.getRuntime().exec(arg);
+			}catch(Exception e)
+			{
+				JOptionPane.showMessageDialog(null, "Error running process: "+e.getMessage());
+			}
 			break;
 		case MOUSE:
 			JOptionPane.showMessageDialog(null, "Mouse action not implemented yet!\nArgs: "+arg);

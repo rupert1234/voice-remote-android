@@ -213,25 +213,36 @@ public class ActionManager extends JPanel {
 	
 	public void processDnD()
 	{
-		int num=getComponentCount()-2;
 		ActionPattern pat;
-		int start=-1,end=-1;
-		for(int i=0; i<num; i++)
+		int start=-1,end=-1,count=0;;
+		Iterator<ActionPattern> it=patterns.iterator();
+		while(it.hasNext())
 		{
-			pat=(ActionPattern)getComponent(i);
-			if(pat.isDnDStart()) start=i;
-			if(pat.isDnDEnd()) end=i;
+			pat=it.next();
+			if(pat.isDnDStart()) start=count;
+			if(pat.isDnDEnd()) end=count;
 			pat.clearDnD();
+			count++;
 		}
 		
 		if(start>=0 && end>=0 && start!=end)
 		{
 			end++;//we wanna add after, not before
 			if(end>start) end--; //if start is smaller than end, end is gonna reduce after removing start
-			pat=(ActionPattern)getComponent(start);
-			remove(start);
-			add(pat,end);			
+			pat=patterns.get(start);
+			patterns.remove(start);
+			patterns.add(end,pat);			
 		}
 		
+		this.removeAll();			
+		add(Box.createRigidArea(new Dimension(0,10)));
+		add(add_pattern_button);		
+		
+		it=patterns.iterator();
+		while(it.hasNext())
+		{
+			pat=it.next();
+			add(pat,getComponentCount()-2);
+		}	
 	}
 }

@@ -39,6 +39,7 @@ public class ActionPattern extends JPanel implements DocumentListener,MouseListe
 	private String [] groups;
 	private boolean drag_start,drag_end;
 	private boolean action_dragging;
+	private JPanel buttons_bar;
 
 	public ActionPattern(ActionManager parent)
 	{
@@ -63,7 +64,7 @@ public class ActionPattern extends JPanel implements DocumentListener,MouseListe
 		pattern_field.getDocument().addDocumentListener(this);
 		add(pattern_field);
 		
-		JPanel buttons_bar=new JPanel();
+		buttons_bar=new JPanel();
 		buttons_bar.setBackground(new Color(129, 231, 222));
 		buttons_bar.setLayout(new BoxLayout(buttons_bar, BoxLayout.X_AXIS));
 		buttons_bar.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -236,25 +237,38 @@ public class ActionPattern extends JPanel implements DocumentListener,MouseListe
 	
 	public void processDnD()
 	{
-		int num=getComponentCount()-2;
-		ActionActivity pat;
-		int start=-1,end=-1;
-		for(int i=1; i<num; i++)
+		ActionActivity act;
+		int start=-1,end=-1,count=0;;
+		Iterator<ActionActivity> it=activities.iterator();
+		while(it.hasNext())
 		{
-			pat=(ActionActivity)getComponent(i);
-			if(pat.isDnDStart()) start=i;
-			if(pat.isDnDEnd()) end=i;
-			pat.clearDnD();
+			act=it.next();
+			if(act.isDnDStart()) start=count;
+			if(act.isDnDEnd()) end=count;
+			act.clearDnD();
+			count++;
 		}
-				
+		
 		if(start>=0 && end>=0 && start!=end)
 		{
 			end++;//we wanna add after, not before
 			if(end>start) end--; //if start is smaller than end, end is gonna reduce after removing start
-			pat=(ActionActivity)getComponent(start);
-			remove(start);
-			add(pat,end);			
+			act=activities.get(start);
+			activities.remove(start);
+			activities.add(end,act);			
 		}
+		
+		this.removeAll();		
+		add(pattern_field);
+		add(Box.createRigidArea(new Dimension(0,10)));
+		add(buttons_bar);		
+		
+		it=activities.iterator();
+		while(it.hasNext())
+		{
+			act=it.next();
+			add(act,getComponentCount()-2);
+		}	
 		
 	}
 }
