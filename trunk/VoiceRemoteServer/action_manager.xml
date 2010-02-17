@@ -1,13 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ActionManager>
-<Pattern Expression="OPEN (.*)">
-<Activity Type="DIALOG">Opening program: $1</Activity>
+<Pattern Expression="OPEN TERMINAL">
+<Activity Type="SYSTEM">open /Applications/Utilities/Terminal.app</Activity>
 </Pattern>
-<Pattern Expression="DEBUG">
-<Activity Type="DIALOG">This is a debug!</Activity>
+<Pattern Expression="OPEN CHESS">
+<Activity Type="SYSTEM">open /Applications/Chess.app</Activity>
 </Pattern>
-<Pattern Expression="CLOSE WINDOW">
-<Activity Type="DIALOG">Closing the window!</Activity>
+<Pattern Expression="OPEN TEXT EDIT">
+<Activity Type="SYSTEM">open /Applications/TextEdit.app</Activity>
+</Pattern>
+<Pattern Expression="OPEN BROWSER">
+<Activity Type="SYSTEM">open /Applications/Safari.app</Activity>
+</Pattern>
+<Pattern Expression="HELLO">
+<Activity Type="DIALOG">HELLO!</Activity>
 </Pattern>
 <Pattern Expression=".*">
 <Activity Type="DIALOG">Got: $0</Activity>
