@@ -27,7 +27,7 @@ public class MicrophoneInput extends JFrame implements MouseListener,Runnable{
 	{
 		setTitle("VoiceRemote microphone");
 		
-		JButton button=new JButton("record");
+		JButton button=new JButton("Push-to-talk");
 
 		button.addMouseListener(this);
 
