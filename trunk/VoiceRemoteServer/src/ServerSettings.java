@@ -75,16 +75,7 @@ public class ServerSettings extends JFrame {
 		tabbedPane.add("Adv.GrammarEditor", advanced_grammars_panel);
 		tabbedPane.add("Actions", actions_panel);
 		
-		content.add(tabbedPane);
-		
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent evt) {
-				/*
-				 * TODO: this needs to be changed later.
-				 */
-				System.exit(0);
-			}
-		});
+		content.add(tabbedPane);		
 	}
 	
 	private String general_desc_text="This tab contains the general settings for the server.";

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Transcriptions>
 <Word Text="HELLO">hh eh l ow </Word>
 <Word Text="THREE">th r iy </Word>
@@ -10,11 +10,11 @@
 <Word Text="TEXT">t eh k s t </Word>
 <Word Text="&lt;s&gt;">sil </Word>
 <Word Text="DIAL">d ay ax l </Word>
+<Word Text="NOTEPAD">n ow t p ae dx </Word>
 <Word Text="CLOSE">k l ow z </Word>
 <Word Text="TWO">t uw </Word>
-<Word Text="NOTEPAD">n ow t p ae dx </Word>
-<Word Text="DEBUG">d iy b ah g </Word>
 <Word Text="PAINT">p ey n t </Word>
+<Word Text="DEBUG">d iy b ah g </Word>
 <Word Text="&lt;/s&gt;">sil </Word>
 <Word Text="CHESS">ch eh s </Word>
 <Word Text="WINDOW">w ih n d ow </Word>

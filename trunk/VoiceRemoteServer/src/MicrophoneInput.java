@@ -17,6 +17,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class MicrophoneInput extends JFrame implements MouseListener,Runnable{
 
@@ -24,6 +25,8 @@ public class MicrophoneInput extends JFrame implements MouseListener,Runnable{
 
 	public MicrophoneInput()
 	{
+		setTitle("VoiceRemote microphone");
+		
 		JButton button=new JButton("record");
 
 		button.addMouseListener(this);
@@ -31,13 +34,11 @@ public class MicrophoneInput extends JFrame implements MouseListener,Runnable{
 		add(button);
 		
 		setSize(new Dimension(300,100));
-		
-		setVisible(true);
 	}
 
 	private void say(String msg)
 	{
-		System.out.println(msg);
+		JOptionPane.showMessageDialog(null, msg);
 	}
 
 	private AudioFormat getFormat() {
@@ -67,8 +68,6 @@ public class MicrophoneInput extends JFrame implements MouseListener,Runnable{
 			return;
 		}
 
-		say("Connected!");
-
 		if(client==null) return;
 
 		DataOutputStream output=null;
@@ -91,8 +90,6 @@ public class MicrophoneInput extends JFrame implements MouseListener,Runnable{
 
 			int bufferSize = (int)format.getSampleRate() * format.getFrameSize();
 			byte buffer[] = new byte[bufferSize];
-
-			say("recording started...");
 
 			while (running) {
 				int count = 
