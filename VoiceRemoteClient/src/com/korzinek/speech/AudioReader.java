@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.Vector;
 
 import android.media.AudioRecord;
 import android.os.Bundle;
@@ -40,22 +41,19 @@ public class AudioReader implements Runnable {
 	
 	public void run() {		
 		
-		say("Connecting to server...");
-		
 		Socket client=null;
 		try {
 			client=new Socket();
 			client.bind(null);
 			client.connect(new InetSocketAddress(server,port),1000);
 		} catch (UnknownHostException e) {
-			say("Cannot connect to "+server+":"+port+"!\n");	
+			say("Cannot connect to "+server+":"+port+"!");	
 			return;
 		} catch (IOException e) {
-			say("Socket error: "+e.getMessage()+"\n");
+			say("Socket error: "+e.getMessage());
 			return;
 		}
 		
-		say("Connected!\n");
 		
 		if(client==null) return;
 		
@@ -68,46 +66,29 @@ public class AudioReader implements Runnable {
 		
 		if(output==null) return;
 		
-		say("recording started...\n");		
-		audioInput.startRecording();		
+		AudioSender sender=new AudioSender(console,output);
+		Thread th=new Thread(sender);
+		th.start();
 		
+		audioInput.startRecording();		
 		
 		running=true;
 		
 		byte buffer[]=new byte[2048];
 		int ret;
 		
-		while(running)
+		while(running && sender.isRunning())
 		{			
 			ret=audioInput.read(buffer, 0, 2048);
 			if(ret>0)
 			{
-				try {
-					output.writeInt(reverse(ret));
-					output.write(buffer, 0, ret);
-				} catch (IOException e) {
-					say("Write buf:"+e.getMessage()+"\n");
-					break;
-				}
+				sender.addBuffer(buffer);
 			}
 		}
-				
-		try {
-			output.writeInt(0);
-		} catch (IOException e) {
-			say("Write end: "+e.getMessage()+"\n");
-		}
 		
-		audioInput.stop();		
-		say("recording done\n");
+		sender.stopRunning();
 		
-		try {
-			output.close();
-		} catch (IOException e) {
-		}
-		
-		
-
+		audioInput.stop();				
 	}
 	
 	public static int reverse(int x) {  
@@ -123,4 +104,108 @@ public class AudioReader implements Runnable {
 		running=false;
 	}
 
+}
+
+class AudioSender implements Runnable
+{
+	Handler console;
+	DataOutputStream output;
+	boolean running,stop;
+	Vector<byte[]> buffers;
+	
+	AudioSender(Handler console, DataOutputStream output)
+	{
+		this.console=console;
+		this.output=output;
+		running=true;
+		stop=false;
+		buffers=new Vector<byte[]>();
+	}
+	
+	public void run() {		
+		
+		boolean buffers_empty;
+		
+		while(!stop)
+		{
+			
+			synchronized (buffers) {
+				buffers_empty=buffers.isEmpty();
+			}
+			
+			if(buffers_empty)
+			{
+				try{
+					Thread.sleep(100);
+				}catch(Exception e) {}
+			}
+			
+			synchronized (buffers) {
+				buffers_empty=buffers.isEmpty();
+			}
+			
+			while(!buffers_empty)
+			{
+				byte [] buffer;
+				synchronized (buffers) {					
+					buffer = buffers.get(0);
+					buffers.remove(0);
+				}
+				
+				int ret = buffer.length;
+				
+				try {
+					output.writeInt(AudioReader.reverse(ret));
+					output.write(buffer, 0, ret);
+				} catch (IOException e) {
+					running=false;
+					say(e.getMessage());
+					return;
+				}
+				
+				synchronized (buffers) {
+					buffers_empty=buffers.isEmpty();
+				}
+			}
+		}
+		
+		
+		try {
+			output.writeInt(0);
+		} catch (IOException e) {}
+		
+
+		try {
+			output.close();
+		} catch (IOException e) {
+		}
+		
+	}
+	
+	public void say(String text)
+	{
+		Message msg = console.obtainMessage();
+        Bundle b = new Bundle();
+        b.putString("msg", text);
+        msg.setData(b);
+        console.sendMessage(msg);
+	}
+	
+	public void addBuffer(byte[] buffer)
+	{
+		byte [] copy=buffer.clone();
+		synchronized (buffers) {			
+			buffers.add(copy);
+		}
+	}
+	
+	public boolean isRunning()
+	{
+		return running;
+	}
+	
+	public void stopRunning()
+	{
+		stop=true;
+	}
 }
