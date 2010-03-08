@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">Speech Remote</string>
-    <string name="app_name">SpeechGateway</string>
+    <string name="app_name">VoiceRemote</string>
 <string name="button">Push-to-talk</string>
 
 <style name="Title"><item name="android:textSize">32sp</item>
