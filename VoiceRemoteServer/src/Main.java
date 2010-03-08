@@ -1,20 +1,23 @@
+
 public class Main {
 
 	public static JuliusStarter julius_starter;
 	public static ServerSettings settings;
 	public static TranscriptionCache transcription_cache;
+	public static MicrophoneInput microphone_input;
 	
 	public static void main(String[] args) {
-
+		
 		transcription_cache=new TranscriptionCache();
 		transcription_cache.load();
 		
 		settings=new ServerSettings();
-		settings.setVisible(true);
+		
+		microphone_input=new MicrophoneInput();
 		
 		julius_starter=new JuliusStarter();
 		Thread js_th=new Thread(julius_starter);
-		js_th.start();		
+		js_th.start();
 		
 		try{
 		Thread.sleep(1000);
@@ -32,8 +35,7 @@ public class Main {
 			}
 		});
 		
-		new MicrophoneInput();
-		
+		new MainMenu();
+		//new CompatibleMainMenu();
 	}
-
 }
