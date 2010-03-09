@@ -1,4 +1,5 @@
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.ByteArrayOutputStream;
@@ -6,6 +7,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -15,6 +17,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -26,6 +29,13 @@ public class MicrophoneInput extends JFrame implements MouseListener,Runnable{
 	public MicrophoneInput()
 	{
 		setTitle("VoiceRemote microphone");
+		
+		URL imageURL = MainMenu.class.getResource("image/icon.png");
+		if(imageURL!=null)
+		{
+			Image iconIMG=new ImageIcon(imageURL,"VoiceRemote").getImage();
+			setIconImage(iconIMG);
+		}
 		
 		JButton button=new JButton("Push-to-talk");
 

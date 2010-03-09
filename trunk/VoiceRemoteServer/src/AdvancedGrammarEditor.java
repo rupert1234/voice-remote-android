@@ -24,7 +24,7 @@ import edu.uci.ics.jung.visualization.renderers.Renderer.VertexLabel.Position;
 
 public class AdvancedGrammarEditor extends JPanel {
 	
-	private String adv_grammar_desc_text="Here you can view and modifiy the grammar DFA.";
+	private String adv_grammar_desc_text="Here you can view the grammar DFA.";
 	
 	private JuliusGrammar grammar;
 	private JuliusDictionary dictionary;
@@ -52,26 +52,22 @@ public class AdvancedGrammarEditor extends JPanel {
 		JPanel buttons_bottom=new JPanel();
 		buttons_bottom.setLayout(new BoxLayout(buttons_bottom, BoxLayout.X_AXIS));
 		
-		JButton load_button=new JButton("Load");
+		JButton load_button=new JButton("Refresh");
 		load_button.addActionListener(new AbstractAction() {			
 			public void actionPerformed(ActionEvent e) {
-				grammar.load("julius/grammar/main.dfa");
-				dictionary.load("julius/grammar/main.dict");
-				drawGrammar(grammar,dictionary);
+				refresh();
 			}
 		});
 		buttons_bottom.add(load_button);
 		
-		JButton activate_button=new JButton("Activate");
-		buttons_bottom.add(activate_button);
-		
-		JButton load_other_button=new JButton("Load other");
-		buttons_bottom.add(load_other_button);
-		
-		JButton save_as_button=new JButton("Save as");
-		buttons_bottom.add(save_as_button);
-		
 		add(buttons_bottom,BorderLayout.PAGE_END);
+	}
+	
+	public void refresh()
+	{
+		grammar.load("julius/grammar/main.dfa");
+		dictionary.load("julius/grammar/main.dict");
+		drawGrammar(grammar,dictionary);
 	}
 	
 	class EdgeTransformer implements Transformer<String, String>
@@ -85,7 +81,7 @@ public class AdvancedGrammarEditor extends JPanel {
 		}
 		
 		public String transform(String str) {
-			int num=Integer.parseInt(str.substring(3));
+			int num=Integer.parseInt(str.substring(3).trim());
 			return dictionary.getWord(num);
 		}
 		

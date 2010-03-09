@@ -1,35 +1,38 @@
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.net.URL;
 
-import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
+import javax.swing.border.EtchedBorder;
 
 
 public class ServerSettings extends JFrame {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1057013266790426531L;
 	
 	private ActionSettings actions_panel;
-	private GrammarSettings grammars_panel;
-	private AdvancedGrammarEditor advanced_grammars_panel;
-	private LexiconSettings lexicon_panel;
+	private GrammarWizard grammars_panel;
+	private JLabel status_panel;
 
 	public ServerSettings() {
 		
 		super("Sever settings");
+		
+		URL imageURL = MainMenu.class.getResource("image/icon.png");
+		if(imageURL!=null)
+		{
+			Image iconIMG=new ImageIcon(imageURL,"VoiceRemote").getImage();
+			setIconImage(iconIMG);
+		}
 		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -40,45 +43,38 @@ public class ServerSettings extends JFrame {
 		setSize(640,480);
 		
 		Container content = getContentPane();
+		content.setLayout(new BorderLayout());
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
 		
-		JPanel general_panel = new JPanel();
-		general_panel.setLayout(new BoxLayout(general_panel, BoxLayout.Y_AXIS));
-		JLabel general_description = new JLabel();
-		general_description.setText(general_desc_text);
-		general_description.setMaximumSize(new Dimension(Integer.MAX_VALUE,50));
-		general_description.setVerticalAlignment(JLabel.CENTER);
-		general_description.setHorizontalAlignment(JLabel.CENTER);
-		general_description.setBorder(BorderFactory.createEtchedBorder());
-		general_panel.add(general_description);
+		JPanel main_panel = new JPanel();	
+		main_panel.setLayout(new GridLayout());
+		JEditorPane about=new JEditorPane();
+		about.setEditable(false);
+		URL path=getClass().getResource("image/about.html");
+		try{
+			if(path!=null)
+				about.setPage(path);
+		}catch(Exception e){}
+		JScrollPane scroll=new JScrollPane(about);
+		main_panel.add(scroll);				
 		
-		JButton show_console=new JButton("Show Julius console");
-		show_console.addActionListener(new AbstractAction() {			
-			public void actionPerformed(ActionEvent e) {
-				Main.julius_starter.displayOutput();				
-			}
-		});
-		general_panel.add(show_console);
 		
-		grammars_panel = new GrammarSettings();
-		
-		advanced_grammars_panel = new AdvancedGrammarEditor();
-		
-		lexicon_panel = new LexiconSettings(grammars_panel);
+		grammars_panel = new GrammarWizard();
 		
 		actions_panel = new ActionSettings();		
 		
-		tabbedPane.add("General", general_panel);
+		tabbedPane.add("About", main_panel);
 		tabbedPane.add("Grammars", grammars_panel);		
-		tabbedPane.add("Lexicon",lexicon_panel);
-		tabbedPane.add("Adv.GrammarEditor", advanced_grammars_panel);
 		tabbedPane.add("Actions", actions_panel);
 		
-		content.add(tabbedPane);		
+		content.add(tabbedPane,BorderLayout.CENTER);
+		
+		status_panel=new JLabel("Julius is NOT running.");
+		status_panel.setPreferredSize(new Dimension(Integer.MAX_VALUE,20));
+		status_panel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+		content.add(status_panel,BorderLayout.SOUTH);
 	}
-	
-	private String general_desc_text="This tab contains the general settings for the server.";
 
 	
 	public ActionSettings getActions()
@@ -86,4 +82,9 @@ public class ServerSettings extends JFrame {
 		return actions_panel;
 	}
 	
+	public void setStatusText(String txt)
+	{
+		status_panel.setText(txt);
+		status_panel.repaint();
+	}
 }

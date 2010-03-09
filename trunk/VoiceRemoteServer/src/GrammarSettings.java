@@ -1,7 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.Iterator;
@@ -38,15 +37,20 @@ import org.w3c.dom.Text;
 
 public class GrammarSettings extends JPanel {
 
-	private String gramamr_desc_text="This tab allows to change the words that the system will recognize.";
+	private String gramamr_desc_text="<html>Here you can define the words or phrases that you want the system to recognize. " +
+			"After you finish, click the button on the bottom to continue with the next step. If you add too many lines by accident," +
+			"just leave the ones you don't need empty. They will be erased once you click process.</html>";
 	
 	private JPanel grammar_list;
 	private JButton add_line;
 	private JuliusGrammar grammar;
 	private JuliusDictionary dictionary;
+	private GrammarWizard wizard;
 	
-	GrammarSettings()
+	GrammarSettings(GrammarWizard wizard)
 	{
+		this.wizard=wizard;
+		
 		setLayout(new BorderLayout());
 		
 		JLabel grammars_description = new JLabel();
@@ -82,28 +86,26 @@ public class GrammarSettings extends JPanel {
 		JPanel buttons_bottom=new JPanel();
 		buttons_bottom.setLayout(new BoxLayout(buttons_bottom, BoxLayout.X_AXIS));
 		
-		JButton button_save=new JButton("Save");
-		button_save.addActionListener(new AbstractAction() {
+		JButton button_next=new JButton("Process and continue");
+		button_next.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				clearEmptyLines();
 				save();
-			}
-		});
-		
-		JButton button_compile=new JButton("Process");
-		button_compile.addActionListener(new AbstractAction() {
-			public void actionPerformed(ActionEvent e) {
-				clearEmptyLines();
 				process();
+				displayLexicon();
 			}
-		});
-		
-		buttons_bottom.add(button_save);
+		});		
 		buttons_bottom.add(Box.createHorizontalGlue());
-		buttons_bottom.add(button_compile);
+		buttons_bottom.add(button_next);
+		buttons_bottom.add(Box.createHorizontalGlue());
 		add(buttons_bottom,BorderLayout.PAGE_END);
 		
 		load();
+	}
+	
+	public void displayLexicon()
+	{
+		wizard.displayLexicon();
 	}
 	
 	public void clearEmptyLines()
