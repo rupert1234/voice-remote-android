@@ -1,14 +1,9 @@
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,7 +12,10 @@ import javax.swing.JScrollPane;
 
 public class ActionSettings extends JPanel {
 	
-	private String actions_desc_text="This tab is used for binding recognized utterances to specific actions.";
+	private String actions_desc_text="<html>This tab is used for binding recognized utterances to specific actions. " +
+			"First text-field contains the regular expression that, when matched with the utterance, will initiate the actions below. " +
+			"You can move around actions and patterns by clicking and dragging them to desired positions.</html>";
+	
 	private JScrollPane scrollPane;
 	
 	ActionManager manager;

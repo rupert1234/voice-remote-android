@@ -5,6 +5,7 @@ public class Main {
 	public static ServerSettings settings;
 	public static TranscriptionCache transcription_cache;
 	public static MicrophoneInput microphone_input;
+	public static JuliusClient client;
 	
 	public static void main(String[] args) {
 		
@@ -15,17 +16,7 @@ public class Main {
 		
 		microphone_input=new MicrophoneInput();
 		
-		julius_starter=new JuliusStarter();
-		Thread js_th=new Thread(julius_starter);
-		js_th.start();
-		
-		try{
-		Thread.sleep(1000);
-		}catch(Exception e){}
-		
-		JuliusClient client=new JuliusClient("localhost",5530,settings.getActions());
-		Thread cl_th = new Thread(client);
-		cl_th.start();
+		start_julius();
 		
 		Runtime.getRuntime().addShutdownHook(new Thread()
 		{
@@ -37,5 +28,20 @@ public class Main {
 		
 		new MainMenu();
 		//new CompatibleMainMenu();
+	}
+	
+	public static void start_julius()
+	{
+		julius_starter=new JuliusStarter();
+		Thread js_th=new Thread(julius_starter);
+		js_th.start();
+		
+		try{
+		Thread.sleep(1000);
+		}catch(Exception e){}
+		
+		client=new JuliusClient("localhost",5530,settings.getActions());
+		Thread cl_th = new Thread(client);
+		cl_th.start();
 	}
 }

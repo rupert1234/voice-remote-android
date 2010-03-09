@@ -5,6 +5,7 @@ import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URL;
 
 import javax.swing.AbstractAction;
@@ -47,6 +48,13 @@ public class MainMenu {
 			}
 		});
 		
+		MenuItem console=new MenuItem("Show Julius console");
+		console.addActionListener(new AbstractAction() {			
+			public void actionPerformed(ActionEvent arg0) {
+				Main.julius_starter.displayOutput();				
+			}
+		});
+		
 		MenuItem mic=new MenuItem("Show microphone");
 		mic.addActionListener(new AbstractAction() {			
 			public void actionPerformed(ActionEvent e) {
@@ -62,11 +70,19 @@ public class MainMenu {
 		});
 		
 		popup.add(settings);
+		popup.add(console);
 		popup.add(mic);
 		popup.addSeparator();
 		popup.add(exit);
 		
 		icon.setPopupMenu(popup);
+		icon.setToolTip("VoiceRemote");
+		icon.addActionListener(new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Main.microphone_input.setVisible(true);				
+			}
+		});
 		
 		try {
 			tray.add(icon);
