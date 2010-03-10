@@ -16,6 +16,10 @@ public class Main {
 		
 		microphone_input=new MicrophoneInput();
 		
+		JuliusMonitor monitor=new JuliusMonitor();
+		Thread th=new Thread(monitor);
+		th.start();
+		
 		start_julius();
 		
 		Runtime.getRuntime().addShutdownHook(new Thread()

@@ -32,6 +32,7 @@ public class JuliusStarter implements Runnable {
 		path=System.getProperty("user.dir")+"/julius/";
 		output=new LinkedList<String>();
 		output_list=null;
+		proc=null;
 	}	
 	
 	public void run()
@@ -65,6 +66,19 @@ public class JuliusStarter implements Runnable {
 		
 		terminate();		
 	}	
+	
+	public boolean isRunning()
+	{
+		if(proc==null) return false;
+		
+		try{
+			proc.exitValue();
+			return false;
+		}catch(Exception e)
+		{
+			return true;
+		}
+	}
 	
 	public void kill()
 	{
