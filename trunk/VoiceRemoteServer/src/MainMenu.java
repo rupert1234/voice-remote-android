@@ -10,6 +10,7 @@ import java.net.URL;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 
 
@@ -48,10 +49,37 @@ public class MainMenu {
 			}
 		});
 		
-		MenuItem console=new MenuItem("Show Julius console");
+		PopupMenu julius=new PopupMenu("Julius");
+		
+		MenuItem console=new MenuItem("Show console");
 		console.addActionListener(new AbstractAction() {			
 			public void actionPerformed(ActionEvent arg0) {
 				Main.julius_starter.displayOutput();				
+			}
+		});
+		
+		MenuItem start=new MenuItem("Start");
+		start.addActionListener(new AbstractAction() {			
+			public void actionPerformed(ActionEvent arg0) {
+				Main.start_julius();							
+			}
+		});
+		
+		MenuItem stop=new MenuItem("Stop");
+		stop.addActionListener(new AbstractAction() {			
+			public void actionPerformed(ActionEvent arg0) {
+				Main.julius_starter.terminate();			
+			}
+		});
+		
+		MenuItem restart=new MenuItem("Restart");
+		restart.addActionListener(new AbstractAction() {			
+			public void actionPerformed(ActionEvent arg0) {
+				Main.julius_starter.terminate();	
+				try{
+					Thread.sleep(1000);
+				}catch(Exception e){}
+				Main.start_julius();
 			}
 		});
 		
@@ -70,7 +98,11 @@ public class MainMenu {
 		});
 		
 		popup.add(settings);
-		popup.add(console);
+		julius.add(console);
+		julius.add(start);
+		julius.add(stop);
+		julius.add(restart);
+		popup.add(julius);
 		popup.add(mic);
 		popup.addSeparator();
 		popup.add(exit);

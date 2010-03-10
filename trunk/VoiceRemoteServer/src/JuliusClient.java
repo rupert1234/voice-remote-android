@@ -29,9 +29,30 @@ public class JuliusClient implements Runnable {
 	public void run()
 	{		
 		Socket connection=null;
+		int num_tries=0;
+		while(connection==null && num_tries<3)
+		{
+			try{
+				connection=new Socket(hostname,port);
+			}catch(Exception e)
+			{
+				connection=null;
+			}
+			num_tries++;
+			if(connection==null) 
+				try{
+					Thread.sleep(1000);
+				}catch(Exception e){}
+		}
+		
+		if(connection==null)
+		{
+			JOptionPane.showMessageDialog(null, "Failed to connect to Julius. Please restart the program.");
+			return;
+		}
+		
 		BufferedReader stream=null;
 		try{
-			connection=new Socket(hostname,port);
 			stream=new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			synchronized (mutex) {
 				writer=new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
@@ -41,7 +62,6 @@ public class JuliusClient implements Runnable {
 			return;
 		}
 		
-		Main.settings.setStatusText("Julius is running.");
 		while(connection.isConnected())
 		{
 			String line;
@@ -58,7 +78,6 @@ public class JuliusClient implements Runnable {
 				actions.processRecognition(ret);
 			}
 		}
-		Main.settings.setStatusText("Julius is NOT running.");
 		
 		try {
 			stream.close();
