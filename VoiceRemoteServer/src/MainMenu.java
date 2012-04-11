@@ -10,8 +10,8 @@ import java.net.URL;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
-import javax.swing.JMenu;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 
 public class MainMenu {
@@ -21,6 +21,13 @@ public class MainMenu {
 	public MainMenu()
 	{
 		comp=null;
+		
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
 		
 		if(!SystemTray.isSupported())
 		{
@@ -44,6 +51,7 @@ public class MainMenu {
 		
 		MenuItem settings=new MenuItem("Settings");
 		settings.addActionListener(new AbstractAction() {			
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Main.settings.setVisible(true);				
 			}
@@ -53,6 +61,7 @@ public class MainMenu {
 		
 		MenuItem console=new MenuItem("Show console");
 		console.addActionListener(new AbstractAction() {			
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Main.julius_starter.displayOutput();				
 			}
@@ -60,6 +69,7 @@ public class MainMenu {
 		
 		MenuItem start=new MenuItem("Start");
 		start.addActionListener(new AbstractAction() {			
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Main.start_julius();							
 			}
@@ -67,6 +77,7 @@ public class MainMenu {
 		
 		MenuItem stop=new MenuItem("Stop");
 		stop.addActionListener(new AbstractAction() {			
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Main.julius_starter.terminate();			
 			}
@@ -74,6 +85,7 @@ public class MainMenu {
 		
 		MenuItem restart=new MenuItem("Restart");
 		restart.addActionListener(new AbstractAction() {			
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Main.julius_starter.terminate();	
 				try{
@@ -85,6 +97,7 @@ public class MainMenu {
 		
 		MenuItem mic=new MenuItem("Show microphone");
 		mic.addActionListener(new AbstractAction() {			
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Main.microphone_input.setVisible(true);				
 			}
@@ -92,6 +105,7 @@ public class MainMenu {
 		
 		MenuItem exit=new MenuItem("Exit");
 		exit.addActionListener(new AbstractAction() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.exit(0);
 			}

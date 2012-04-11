@@ -3,12 +3,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
-
-import org.apache.commons.collections15.map.HashedMap;
 
 
 public class TranscriptionCache {
@@ -16,7 +15,7 @@ public class TranscriptionCache {
 	
 	public TranscriptionCache()
 	{
-		cache=new HashedMap<String, String>();
+		cache=new HashMap<String, String>();
 	}
 	
 	public String getTranscription(String word)

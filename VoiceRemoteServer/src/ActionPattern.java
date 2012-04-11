@@ -1,13 +1,9 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.AbstractList;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,13 +15,10 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-
-import org.w3c.dom.Element;
 
 
 public class ActionPattern extends JPanel implements DocumentListener,MouseListener{
@@ -71,6 +64,7 @@ public class ActionPattern extends JPanel implements DocumentListener,MouseListe
 		
 		JButton add_activity=new JButton("Add activity");
 		add_activity.addActionListener(new AbstractAction() {			
+			@Override
 			public void actionPerformed(ActionEvent e) {		
 				ActionActivity act=new ActionActivity(this_pattern);				
 				this_pattern.addActivity(act);
@@ -81,6 +75,7 @@ public class ActionPattern extends JPanel implements DocumentListener,MouseListe
 		
 		JButton test=new JButton("Test");
 		test.addActionListener(new AbstractAction() {			
+			@Override
 			public void actionPerformed(ActionEvent e) {		
 				this_pattern.executeAllActivities(null);
 			}
@@ -91,6 +86,7 @@ public class ActionPattern extends JPanel implements DocumentListener,MouseListe
 
 		JButton remove_pattern=new JButton("Remove pattern");
 		remove_pattern.addActionListener(new AbstractAction() {			
+			@Override
 			public void actionPerformed(ActionEvent e) {			
 				parent.removePattern(this_pattern);
 				parent.revalidate();
@@ -145,11 +141,14 @@ public class ActionPattern extends JPanel implements DocumentListener,MouseListe
 		 return activities.iterator();		
 	}
 
+	@Override
 	public void changedUpdate(DocumentEvent e) {
 	}
+	@Override
 	public void insertUpdate(DocumentEvent e) {
 		pattern=pattern_field.getText();
 	}
+	@Override
 	public void removeUpdate(DocumentEvent e) {
 		pattern=pattern_field.getText();
 	}
@@ -176,10 +175,12 @@ public class ActionPattern extends JPanel implements DocumentListener,MouseListe
 		return groups;
 	}
 
+	@Override
 	public void mouseClicked(MouseEvent e) {
 
 	}
 
+	@Override
 	public void mouseEntered(MouseEvent e) {
 		if(parent.getDragging() && !drag_start)
 		{
@@ -188,6 +189,7 @@ public class ActionPattern extends JPanel implements DocumentListener,MouseListe
 		}
 	}
 
+	@Override
 	public void mouseExited(MouseEvent e) {
 		if(parent.getDragging() && !drag_start)
 		{
@@ -196,12 +198,14 @@ public class ActionPattern extends JPanel implements DocumentListener,MouseListe
 		}
 	}
 
+	@Override
 	public void mousePressed(MouseEvent e) {		
 		setBorder(BorderFactory.createLineBorder(Color.red,5));
 		parent.setDragging(true);
 		drag_start=true;
 	}
 
+	@Override
 	public void mouseReleased(MouseEvent e) {
 		setBorder(null);
 		parent.setDragging(false);

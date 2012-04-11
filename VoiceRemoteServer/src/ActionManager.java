@@ -28,6 +28,7 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 
 
+@SuppressWarnings("serial")
 public class ActionManager extends JPanel {
 	
 	private List<ActionPattern> patterns;
@@ -46,6 +47,7 @@ public class ActionManager extends JPanel {
 		add_pattern_button.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		add_pattern_button.addActionListener(new AbstractAction() {			
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				ActionPattern act=new ActionPattern(this_manager);
 				addPattern(act);				

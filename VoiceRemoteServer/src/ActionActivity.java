@@ -52,6 +52,7 @@ public class ActionActivity extends JPanel implements DocumentListener,MouseList
 		typesList=new JComboBox(types);
 		typesList.setMaximumSize(new Dimension(100,20));
 		typesList.addActionListener(new AbstractAction() {			
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				this_activity.updateActionType();				
 			}
@@ -76,6 +77,7 @@ public class ActionActivity extends JPanel implements DocumentListener,MouseList
 		
 		JButton remove = new JButton("Remove");
 		remove.addActionListener(new AbstractAction() {			
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				parent.removeActivity(this_activity);
 				parent.revalidate();
@@ -144,11 +146,14 @@ public class ActionActivity extends JPanel implements DocumentListener,MouseList
 		}
 	}
 
+	@Override
 	public void changedUpdate(DocumentEvent e) {
 	}
+	@Override
 	public void insertUpdate(DocumentEvent e) {
 		argument=argument_field.getText();
 	}
+	@Override
 	public void removeUpdate(DocumentEvent e) {
 		argument=argument_field.getText();
 	}
@@ -162,9 +167,11 @@ public class ActionActivity extends JPanel implements DocumentListener,MouseList
 		else if(str=="Keyboard") type=ActionActivityType.KEYBOARD;
 	}
 
+	@Override
 	public void mouseClicked(MouseEvent e) {	
 	}
 
+	@Override
 	public void mouseEntered(MouseEvent e) {
 		if(parent.getDragging() && !drag_start)
 		{
@@ -173,6 +180,7 @@ public class ActionActivity extends JPanel implements DocumentListener,MouseList
 		}
 	}
 
+	@Override
 	public void mouseExited(MouseEvent e) {
 		if(parent.getDragging() && !drag_start)
 		{
@@ -181,12 +189,14 @@ public class ActionActivity extends JPanel implements DocumentListener,MouseList
 		}
 	}
 
+	@Override
 	public void mousePressed(MouseEvent e) {		
 		setBorder(BorderFactory.createLineBorder(Color.red,5));
 		parent.setDragging(true);
 		drag_start=true;
 	}
 
+	@Override
 	public void mouseReleased(MouseEvent e) {
 		setBorder(null);
 		parent.setDragging(false);

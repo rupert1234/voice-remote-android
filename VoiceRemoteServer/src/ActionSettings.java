@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
 
 public class ActionSettings extends JPanel {
@@ -27,8 +28,8 @@ public class ActionSettings extends JPanel {
 		JLabel actions_description = new JLabel();
 		actions_description.setText(actions_desc_text);
 		actions_description.setPreferredSize(new Dimension(Integer.MAX_VALUE,50));
-		actions_description.setVerticalAlignment(JLabel.CENTER);
-		actions_description.setHorizontalAlignment(JLabel.CENTER);
+		actions_description.setVerticalAlignment(SwingConstants.CENTER);
+		actions_description.setHorizontalAlignment(SwingConstants.CENTER);
 		actions_description.setBorder(BorderFactory.createEtchedBorder());
 		add(actions_description,BorderLayout.PAGE_START);
 		
@@ -40,6 +41,7 @@ public class ActionSettings extends JPanel {
 		
 		JButton button_save=new JButton("Save All");
 		button_save.addActionListener(new AbstractAction() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				manager.save();				
 			}
