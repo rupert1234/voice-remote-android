@@ -4,7 +4,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,6 +34,7 @@ public class JuliusStarter implements Runnable {
 		proc=null;
 	}	
 	
+	@Override
 	public void run()
 	{
 		try {
@@ -119,6 +119,7 @@ public class JuliusStarter implements Runnable {
 
 	class ExitListener extends WindowAdapter
 	{
+		@Override
 		public void windowClosing(WindowEvent ev)
 		{
 			synchronized(output)
@@ -186,6 +187,7 @@ public class JuliusStarter implements Runnable {
 			this.stream=stream;
 		}
 		
+		@Override
 		public void run()
 		{
 			String line;

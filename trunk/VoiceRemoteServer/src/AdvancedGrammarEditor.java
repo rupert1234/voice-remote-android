@@ -10,16 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
-import org.apache.commons.collections15.Transformer;
-
-import edu.uci.ics.jung.algorithms.layout.FRLayout;
-import edu.uci.ics.jung.algorithms.layout.Layout;
-import edu.uci.ics.jung.graph.DirectedGraph;
-import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
-import edu.uci.ics.jung.visualization.BasicVisualizationServer;
-import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
-import edu.uci.ics.jung.visualization.renderers.Renderer.VertexLabel.Position;
+import javax.swing.SwingConstants;
 
 
 public class AdvancedGrammarEditor extends JPanel {
@@ -40,8 +31,8 @@ public class AdvancedGrammarEditor extends JPanel {
 		JLabel grammars_description = new JLabel();
 		grammars_description.setText(adv_grammar_desc_text);
 		grammars_description.setPreferredSize(new Dimension(Integer.MAX_VALUE,50));
-		grammars_description.setVerticalAlignment(JLabel.CENTER);
-		grammars_description.setHorizontalAlignment(JLabel.CENTER);
+		grammars_description.setVerticalAlignment(SwingConstants.CENTER);
+		grammars_description.setHorizontalAlignment(SwingConstants.CENTER);
 		grammars_description.setBorder(BorderFactory.createEtchedBorder());
 		add(grammars_description,BorderLayout.PAGE_START);
 		
@@ -54,6 +45,7 @@ public class AdvancedGrammarEditor extends JPanel {
 		
 		JButton load_button=new JButton("Refresh");
 		load_button.addActionListener(new AbstractAction() {			
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				refresh();
 			}
@@ -67,10 +59,10 @@ public class AdvancedGrammarEditor extends JPanel {
 	{
 		grammar.load("julius/grammar/main.dfa");
 		dictionary.load("julius/grammar/main.dict");
-		drawGrammar(grammar,dictionary);
+		//drawGrammar(grammar,dictionary);
 	}
 	
-	class EdgeTransformer implements Transformer<String, String>
+	/*class EdgeTransformer implements Transformer<String, String>
 	{
 
 		JuliusDictionary dictionary; 
@@ -128,5 +120,5 @@ public class AdvancedGrammarEditor extends JPanel {
 		draw_area.revalidate();
 		draw_area.repaint();
 		
-	}
+	}*/
 }

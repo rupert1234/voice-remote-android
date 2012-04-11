@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
@@ -56,8 +57,8 @@ public class GrammarSettings extends JPanel {
 		JLabel grammars_description = new JLabel();
 		grammars_description.setText(gramamr_desc_text);
 		grammars_description.setPreferredSize(new Dimension(Integer.MAX_VALUE,50));
-		grammars_description.setVerticalAlignment(JLabel.CENTER);
-		grammars_description.setHorizontalAlignment(JLabel.CENTER);
+		grammars_description.setVerticalAlignment(SwingConstants.CENTER);
+		grammars_description.setHorizontalAlignment(SwingConstants.CENTER);
 		grammars_description.setBorder(BorderFactory.createEtchedBorder());
 		add(grammars_description,BorderLayout.PAGE_START);
 		
@@ -70,6 +71,7 @@ public class GrammarSettings extends JPanel {
 		grammar_list.add(add_line);
 		
 		add_line.addActionListener(new AbstractAction() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				JTextField grammar_line=new JTextField();
 				grammar_line.setMaximumSize(new Dimension(Integer.MAX_VALUE,30));
@@ -88,6 +90,7 @@ public class GrammarSettings extends JPanel {
 		
 		JButton button_next=new JButton("Process and continue");
 		button_next.addActionListener(new AbstractAction() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				clearEmptyLines();
 				save();

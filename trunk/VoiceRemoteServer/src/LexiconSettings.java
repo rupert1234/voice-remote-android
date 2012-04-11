@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
 
 public class LexiconSettings extends JPanel {
@@ -42,8 +43,8 @@ public class LexiconSettings extends JPanel {
 		JLabel lexicon_description = new JLabel();
 		lexicon_description.setText(lexicon_desc_text);
 		lexicon_description.setPreferredSize(new Dimension(Integer.MAX_VALUE,50));
-		lexicon_description.setVerticalAlignment(JLabel.CENTER);
-		lexicon_description.setHorizontalAlignment(JLabel.CENTER);
+		lexicon_description.setVerticalAlignment(SwingConstants.CENTER);
+		lexicon_description.setHorizontalAlignment(SwingConstants.CENTER);
 		lexicon_description.setBorder(BorderFactory.createEtchedBorder());
 		add(lexicon_description,BorderLayout.PAGE_START);
 		
@@ -58,6 +59,7 @@ public class LexiconSettings extends JPanel {
 		
 		JButton save=new JButton("Save and activate grammar and lexicon");
 		save.addActionListener(new AbstractAction() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if(checkAll())
 				{

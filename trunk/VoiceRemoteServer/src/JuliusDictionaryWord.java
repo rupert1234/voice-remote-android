@@ -178,13 +178,16 @@ public class JuliusDictionaryWord extends JPanel implements DocumentListener{
 		} else ftrans.setBackground(Color.red);
 	}
 
+	@Override
 	public void changedUpdate(DocumentEvent e) {
 	}
 
+	@Override
 	public void insertUpdate(DocumentEvent e) {
 		updateData();		
 	}
 
+	@Override
 	public void removeUpdate(DocumentEvent e) {
 		updateData();
 	}

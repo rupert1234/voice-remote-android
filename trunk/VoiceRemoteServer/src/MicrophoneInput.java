@@ -2,7 +2,6 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -61,6 +60,7 @@ public class MicrophoneInput extends JFrame implements MouseListener,Runnable{
 				sampleSizeInBits, channels, signed, bigEndian);
 	}
 
+	@Override
 	public void run() {
 
 		running = true;
@@ -108,17 +108,16 @@ public class MicrophoneInput extends JFrame implements MouseListener,Runnable{
 					output.writeInt(reverse(count));
 					output.write(buffer, 0, count);
 				}
-			}			
+			}	
+			
+			output.writeInt(0);
+			output.close();
+			line.close();
+			
 		} catch (LineUnavailableException e) {
 			say("Line unavailable: " + e);
 		} catch (IOException e) {
 			say("I/O problems: " + e);
-		}
-		
-		try{
-			output.writeInt(0);
-			output.close();
-		} catch (Exception e) {
 		}
 	}
 	
@@ -135,18 +134,23 @@ public class MicrophoneInput extends JFrame implements MouseListener,Runnable{
         return bbuf.getInt(0);  
     }
 
+	@Override
 	public void mouseClicked(MouseEvent e) {
 	}
+	@Override
 	public void mouseEntered(MouseEvent e) {
 	}
+	@Override
 	public void mouseExited(MouseEvent e) {
 	}
 
+	@Override
 	public void mousePressed(MouseEvent e) {
 		Thread thread=new Thread(this);
 		thread.start();
 	}
 
+	@Override
 	public void mouseReleased(MouseEvent e) {
 		stopRunning();
 	}

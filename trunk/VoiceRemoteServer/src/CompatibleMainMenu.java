@@ -22,6 +22,7 @@ public class CompatibleMainMenu extends JFrame {
 		
 		JButton settings=new JButton("Show settings");
 		settings.addActionListener(new AbstractAction() {			
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Main.settings.setVisible(true);
 			}
@@ -30,6 +31,7 @@ public class CompatibleMainMenu extends JFrame {
 		
 		JButton mic=new JButton("Show microphone");
 		mic.addActionListener(new AbstractAction() {			
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				Main.microphone_input.setVisible(true);				
 			}
@@ -38,6 +40,7 @@ public class CompatibleMainMenu extends JFrame {
 		
 		JButton exit=new JButton("Exit");
 		exit.addActionListener(new AbstractAction() {			
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				System.exit(0);
 			}
