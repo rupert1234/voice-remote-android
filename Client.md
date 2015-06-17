@@ -1,0 +1,1 @@
+The client application is a simple Android App that records speech and sends it to a server on the network. You can install it by downloading it from the repository, provided you have the Android SDK and Eclipse.
